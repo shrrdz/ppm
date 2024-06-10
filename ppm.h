@@ -25,6 +25,9 @@ ppm_image *ppm_decode(const char *path)
           fprintf(stderr, "Error : Unable to open file '%s'\n", path);
      }
 
+     // allocate memory for the header
+     header = (char *) malloc(2 * sizeof(char));
+
      // read the file header
      fgets(header, sizeof(header), file);
 
@@ -33,6 +36,8 @@ ppm_image *ppm_decode(const char *path)
      {
           fprintf(stderr, "Error : '%s' has invalid image format (only PPM P6 is supported)\n");
      }
+     
+     free(header);
      
      // skip the notes
      while ((c = getc(file)) != EOF)
